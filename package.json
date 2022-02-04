@@ -1,0 +1,19 @@
+{
+ "name": "agenda-telefonica",
+ "version": "1.0.0",
+ "description": "mision de agenda-telefonica",
+ "main": "index.js",
+ "scripts": {
+  "test": "echo \"Error: no test specified\" && exit 1",
+  "dev": "nodemon index.js",
+  "start": "node index.js"
+ },
+ "author": "Aldair Huamani",
+ "license": "ISC",
+ "dependencies": {
+  "express": "^4.17.2"
+ },
+ "devDependencies": {
+  "nodemon": "^2.0.15"
+ }
+}
