@@ -47,7 +47,19 @@ app.get("/api/persons", (req, res) => {
 //Post
 app.post("/api/persons/", (req, res) => {
  const { name, number } = req.body
- console.log(req.body)
+
+ if (!name) {
+  return res.status(400).json({ message: "Name is required" })
+ }
+
+ if (!number) {
+  return res.status(400).json({ message: "Number is required" })
+ }
+
+ console.log(persons.indexOf(name))
+ if (persons.indexOf(name) < 0) {
+  return res.status(400).json({ message: "Name must be unique" })
+ }
  const newPerson =
   persons.length > 0 ? Math.floor(Math.random() * (1000 - 1) + 1) : 0
  persons.push({
@@ -55,11 +67,6 @@ app.post("/api/persons/", (req, res) => {
   name: name,
   number: number,
  })
-
- if (!name) {
-  return res.status(400).json({ message: "Name is required", persons })
- }
-
  return res.status(200).json({ message: "Person created", persons })
 })
 
