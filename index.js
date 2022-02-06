@@ -1,6 +1,8 @@
+const { response } = require("express")
 const express = require("express")
 
 const app = express()
+const PORT = 3001
 
 const persons = [
  {
@@ -36,11 +38,31 @@ app.get("/info", (req, res) => {
  res.end()
 })
 
+//Get all
 app.get("/api/persons", (req, res) => {
  res.send(persons)
 })
 
-const PORT = 3001
+//Retrieve
+
+app.get("/api/persons/:id", (req, res) => {
+ const personID = Number(req.params.id)
+ const person = persons.find((item) => item.id === personID)
+ if (!person) {
+  return res.status(404).json({ error: "Not person found" })
+ }
+ return res.status(200).json(person)
+})
+
+//Delete
+app.delete("/api/persons/:id", (req, res) => {
+ const nodeId = Number(req.params.id)
+ const personIndex = persons.findIndex((item) => item.id === nodeId)
+
+ persons.splice(personIndex, 1)
+
+ return res.status(200).json(persons)
+})
 
 app.listen(PORT, () => {
  console.log("Server is running with express")
