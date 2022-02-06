@@ -2,6 +2,7 @@ const { response } = require("express")
 const express = require("express")
 
 const app = express()
+app.use(express.json())
 const PORT = 3001
 
 const persons = [
@@ -41,6 +42,25 @@ app.get("/info", (req, res) => {
 //Get all
 app.get("/api/persons", (req, res) => {
  res.send(persons)
+})
+
+//Post
+app.post("/api/persons/", (req, res) => {
+ const { name, number } = req.body
+ console.log(req.body)
+ const newPerson =
+  persons.length > 0 ? Math.floor(Math.random() * (1000 - 1) + 1) : 0
+ persons.push({
+  id: newPerson,
+  name: name,
+  number: number,
+ })
+
+ if (!name) {
+  return res.status(400).json({ message: "Name is required", persons })
+ }
+
+ return res.status(200).json({ message: "Person created", persons })
 })
 
 //Retrieve
