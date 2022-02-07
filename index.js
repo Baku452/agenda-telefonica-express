@@ -2,7 +2,19 @@ const { response } = require("express")
 const express = require("express")
 
 const app = express()
+const morgan = require("morgan")
 app.use(express.json())
+//Morgan
+morgan.token("body", (req, res) => JSON.stringify(req.body))
+morgan.token("host", function (req, res) {
+ return req.hostname
+})
+app.use(
+ morgan(
+  ":method :host :url :status :body :res[content-length] - :response-time ms"
+ )
+)
+
 const PORT = 3001
 
 const persons = [
@@ -67,7 +79,7 @@ app.post("/api/persons/", (req, res) => {
   name: name,
   number: number,
  })
- return res.status(200).json({ message: "Person created", persons })
+ return res.status(202).json({ message: "Person created", persons })
 })
 
 //Retrieve
